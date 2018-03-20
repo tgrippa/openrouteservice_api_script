@@ -48,12 +48,8 @@ points_gdf=gpd.read_file(input_shape)
 if str(points_gdf['geometry'][0])[:5] != "POINT":
     sys.exit("ERROR: The shapefile provided should contains 'POINT' geometries.")
 # The CRS should be WGS84 (EPSG:4326)
-try :
-    points_gdf.crs['init']
-    if points_gdf.crs['init']!='epsg:4326':
-        points_gdf=points_gdf.to_crs({'init': 'epsg:4326'})
-except:
-    points_gdf=points_gdf.to_crs({'init': 'epsg:4326'})
+if points_gdf.crs['init']!='epsg:4326':
+    os.error("Input Shapefile's EPSG is not 4326.")
 
 #### Check for potential problems in the parameters
 #TODO: Add all exceptions according to https://openrouteservice.org/ratelimits/
